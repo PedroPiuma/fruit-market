@@ -1,17 +1,27 @@
-import { Circle, Flex, Image, Badge, Stat, StatLabel, StatNumber, StatHelpText, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Text, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, useToast } from "@chakra-ui/react"
+import {
+    Circle, Flex, Image, Badge, Stat, StatLabel, StatNumber, StatHelpText, Button,
+    Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody,
+    ModalFooter, useDisclosure, Text, NumberInput, NumberInputField, NumberInputStepper,
+    NumberIncrementStepper, NumberDecrementStepper, useToast
+} from "@chakra-ui/react"
 import { useRef, useState } from "react"
-import { Container } from './styled'
+
+// webSettings.setDomStorageEnabled(true)
 
 const Card = ({ name, price, url, type }) => {
     const [priceFinal, setPriceFinal] = useState(`R$ ${(0.5 * price).toFixed(2)}`)
+    const [quantity, setQuantity] = useState(type === 'kg' ? 0.5 : 1)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const finalRef = useRef()
     const toast = useToast()
-
-    const saveOnLocalStore = (fruitName, priceFinal) => localStorage.setItem(fruitName, priceFinal)
+    const saveOnLocalStorage = (fruitName, object) => {
+        localStorage.setItem(fruitName, object)
+        // localStorage.mobile.setItem(fruitName, object)
+    }
 
     return (
-        <Container>
+        <Flex alignItems={'center'} border={'1px solid blue'} borderRadius='15px' justifyContent={'space-around'}
+            padding={'5px'} gap='5x' width={'100%'} height={'100%'} maxWidth={370} maxHeight={190}>
             <Flex flexDirection={'column'} alignItems='center'>
                 <p>{name}</p>
                 <Circle as={Image} src={url} alt='Foto da fruta' boxSize='150px' objectFit='cover' />
@@ -25,7 +35,7 @@ const Card = ({ name, price, url, type }) => {
                 <Button colorScheme='teal' size='xs' onClick={onOpen}>Quero comprar</Button>
             </Flex>
 
-            <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+            <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} size={'xs'} >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>{name}</ModalHeader>
@@ -38,18 +48,24 @@ const Card = ({ name, price, url, type }) => {
                                 <StatNumber>R${price.toFixed(2)}</StatNumber>
                                 <StatHelpText>Preço por {type === 'kg' ? type : 'unidade'} </StatHelpText>
                             </Stat>
-                            <NumberInput defaultValue={0.5} precision={3} max={10} min={0.2} step={0.05} onChange={(e) => setPriceFinal(`R$ ${(e * price).toFixed(2)}`)}>
+                            <NumberInput defaultValue={type === 'kg' ? 0.5 : 1} precision={type === 'kg' ? 3 : 0} max={type === 'kg' ? 10 : 25} min={type === 'kg' ? 0.2 : 1} step={type === 'kg' ? 0.05 : 1} onChange={(e) => {
+                                setQuantity(e)
+                                setPriceFinal(`R$ ${(e * price).toFixed(2)} `)
+                            }}>
                                 <NumberInputField maxLength={5} />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
                                     <NumberDecrementStepper />
                                 </NumberInputStepper>
                             </NumberInput>
-                            <Text>Preço final: {priceFinal}</Text>
+                            <Badge variant='solid' colorScheme='green' textAlign={'center'} borderRadius='0 0 15px 15px' >
+                                <Text>Preço final</Text>
+                                <Text fontSize={'sm'}>{priceFinal}</Text>
+                            </Badge>
                         </Flex>
                     </ModalBody>
                     <ModalFooter><Button colorScheme='teal' size='xs' onClick={() => {
-                        saveOnLocalStore(name, priceFinal)
+                        saveOnLocalStorage(name, JSON.stringify([{ priceFinal }, { quantity }]))
                         onClose()
                         toast({
                             title: `Adicionado a lista`,
@@ -59,7 +75,7 @@ const Card = ({ name, price, url, type }) => {
                     }}>Adicionar a lista</Button></ModalFooter>
                 </ModalContent>
             </Modal>
-        </Container >
+        </Flex >
     )
 }
 

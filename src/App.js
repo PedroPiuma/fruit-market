@@ -4,7 +4,6 @@ import ListFruits from './routes/ListFruits';
 import Layout from './components/Layout/Layout'
 import Payment from './routes/Payment';
 
-
 function App() {
   return (
     <Routes>
