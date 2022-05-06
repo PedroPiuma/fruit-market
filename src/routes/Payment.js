@@ -7,7 +7,7 @@ function Payment() {
     return (
         <div>
             <Text>Seu carrinho de compras</Text>
-            {Object.entries(localStorage).map(e => <CardPayment list={e} />)}
+            {Object.entries(localStorage).map(elemStorage => <CardPayment list={elemStorage} />)}
             <Button size={'xs'} width='fit-content' onClick={() => {
                 localStorage.clear()
                 toast({
