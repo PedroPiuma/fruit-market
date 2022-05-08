@@ -6,25 +6,28 @@ import {
 } from "@chakra-ui/react"
 import { useRef, useState } from "react"
 
-// webSettings.setDomStorageEnabled(true)
-
-const Card = ({ name, price, url, type }) => {
-    const [priceFinal, setPriceFinal] = useState(`R$ ${(0.5 * price).toFixed(2)}`)
+const Card = ({ name, price, url, type, setStorageNum }) => {
+    const [priceFinal, setPriceFinal] = useState((0.5 * price).toFixed(2))
     const [quantity, setQuantity] = useState(type === 'kg' ? 0.5 : 1)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const finalRef = useRef()
     const toast = useToast()
     const saveOnLocalStorage = (fruitName, object) => {
         localStorage.setItem(fruitName, object)
-        // localStorage.mobile.setItem(fruitName, object)
+        onClose()
+        toast({
+            title: `Adicionado a lista`,
+            status: 'success',
+            isClosable: true,
+        })
     }
 
     return (
-        <Flex alignItems={'center'} border={'1px solid blue'} borderRadius='15px' justifyContent={'space-around'}
-            padding={'5px'} gap='5x' width={'100%'} height={'100%'} maxWidth={370} maxHeight={190}>
+        <Flex bgGradient={'linear(to-tr, yellow.100, green.700)'} alignItems={'center'} borderBottom='2px' borderTop='2px' borderStyle='solid' borderColor={'teal.200'} borderRadius='5px 30px' justifyContent={'space-around'}
+            padding={'5px'} gap='5x' width={370} height={190}>
             <Flex flexDirection={'column'} alignItems='center'>
-                <p>{name}</p>
-                <Circle as={Image} src={url} alt='Foto da fruta' boxSize='150px' objectFit='cover' />
+                <Text as={'kbd'} >{name}</Text>
+                <Circle as={Image} src={url} border='1px solid black' alt='Foto da fruta' boxSize='150px' objectFit='cover' />
             </Flex>
             <Flex flexDirection={'column'}>
                 <Stat display={'flex'} flexDirection='column' alignItems={'center'}>
@@ -48,9 +51,10 @@ const Card = ({ name, price, url, type }) => {
                                 <StatNumber>R${price.toFixed(2)}</StatNumber>
                                 <StatHelpText>Preço por {type === 'kg' ? type : 'unidade'} </StatHelpText>
                             </Stat>
-                            <NumberInput defaultValue={type === 'kg' ? 0.5 : 1} precision={type === 'kg' ? 3 : 0} max={type === 'kg' ? 10 : 25} min={type === 'kg' ? 0.2 : 1} step={type === 'kg' ? 0.05 : 1} onChange={(e) => {
+                            <NumberInput maxLength={2} defaultValue={type === 'kg' ? 0.5 : 1} precision={type === 'kg' ? 3 : 0} max={type === 'kg' ? 10 : 25} min={type === 'kg' ? 0.2 : 1} step={type === 'kg' ? 0.05 : 1} onChange={(e) => {
                                 setQuantity(e)
-                                setPriceFinal(`R$ ${(e * price).toFixed(2)} `)
+                                setPriceFinal((e * price).toFixed(2))
+                                return e > 10 ? alert(`Quantidade máxima permitidade é ${type === 'kg' ? 10 : 25}`) : ''
                             }}>
                                 <NumberInputField maxLength={5} />
                                 <NumberInputStepper>
@@ -64,14 +68,9 @@ const Card = ({ name, price, url, type }) => {
                             </Badge>
                         </Flex>
                     </ModalBody>
-                    <ModalFooter><Button colorScheme='teal' size='xs' onClick={() => {
-                        saveOnLocalStorage(name, JSON.stringify([{ priceFinal }, { quantity }]))
-                        onClose()
-                        toast({
-                            title: `Adicionado a lista`,
-                            status: 'success',
-                            isClosable: true,
-                        })
+                    <ModalFooter><Button colorScheme='green' size='xs' onClick={() => {
+                        saveOnLocalStorage(name, JSON.stringify([{ priceFinal }, { quantity }, { type }, { price }]))
+                        setStorageNum(Number(localStorage.length))
                     }}>Adicionar a lista</Button></ModalFooter>
                 </ModalContent>
             </Modal>
