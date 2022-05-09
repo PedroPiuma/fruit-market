@@ -1,16 +1,16 @@
 import fruitList from "../constants/fruit-list"
 import Card from '../components/Card/Card'
-import { Button, IconButton, Stack, useToast, Flex, Text } from "@chakra-ui/react"
-import { ArrowRightIcon } from '@chakra-ui/icons'
+import { Button, Stack, useToast, Flex, Text, Image } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import carIcon from '../img/car-icon.png'
 
 const ListFruits = () => {
     const toast = useToast()
     const [storageNum, setStorageNum] = useState(Number(localStorage.length))
 
     return (
-        <Stack pt='5' px='10' pb={10} bgGradient='linear(to-br, green.500, white)' minHeight={'100vh'}>
+        <Stack pt='5' px='10' pb={10} bgGradient="radial(gray.100, green.50, green.100)" minHeight={'100vh'}>
             <Flex justifyContent={'space-between'} >
                 <Text>Carrinho com: {storageNum} itens</Text>
                 <Button alignSelf='flex-end' colorScheme={'red'} size={'xs'} width='fit-content' onClick={() => {
@@ -26,7 +26,7 @@ const ListFruits = () => {
             <Stack spacing={2} display='flex' flexWrap={'wrap'} flexDirection='row' gap={2} justifyContent='center' alignItems={'center'}>
                 {fruitList.map((elem, index) => <Card key={index} name={elem.name} price={elem.price} url={elem.url} type={elem.type} setStorageNum={setStorageNum} />)}
             </Stack>
-            <Link to={'/payment'}><IconButton position={'fixed'} right={4} bottom={5} size='lg' colorScheme='blackAlpha' aria-label='Search database' icon={<ArrowRightIcon />} /></Link>
+            <Link to={'/payment'}><Image src={carIcon} p='5px 5px 5px 10px' h={50} w='60px' position={'fixed'} right={1} bottom={5} size='lg' bgColor={'blackAlpha.600'} borderRadius='15px 3px 3px 15px' /></Link>
         </Stack >
     )
 }
