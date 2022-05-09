@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stat, StatHelpText, StatLabel, StatNumber, Text, useDisclosure, useToast } from "@chakra-ui/react"
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stat, StatLabel, StatNumber, Text, useDisclosure, useToast } from "@chakra-ui/react"
 import { useRef, useState } from "react"
 import CardPayment from "../components/CardPayment/CardPayment"
 
@@ -20,11 +20,12 @@ function Payment() {
         console.log(toPay)
     }
 
-    if (localStorage.length < 1) return <p>Não há compras na lista</p>;
+    // if (localStorage.length < 1) return <p>Não há compras na lista</p>;
     return (
-        <Flex direction='column' align='center' bgGradient='linear(to-br, green.500, white)' minHeight={'100vh'}>
+        <Flex direction='column' align='center' bgGradient="radial(gray.100, green.50, green.100)" minHeight={'100vh'}>
             <Text mb={3} mt={3} fontSize={'xl'}>Seu carrinho de compras</Text>
             <Flex direction={'column'} gap={2}>
+                {localStorage.length < 1 ? <Text w={250} align='center'>Não há produtos na lista de compras.</Text> : ''}
                 {Object.entries(localStorage).map((elemStorage, index) => {
                     totalValue += Number(JSON.parse(elemStorage[1])[0].priceFinal)
                     return <CardPayment key={index} id={index + 1} list={elemStorage} setChanged={setChanged} />
@@ -33,10 +34,9 @@ function Payment() {
             <Flex direction={'column'} align='center'>
                 <Stat mt={5}>
                     <StatLabel>Valor Total</StatLabel>
-                    <StatNumber>R${totalValue.toFixed(2)}</StatNumber>
-                    <StatHelpText>help</StatHelpText>
+                    <StatNumber>R$ {localStorage.length < 1 ? '---' : `${totalValue.toFixed(2)}`}</StatNumber>
                 </Stat>
-                <Flex gap={3}>
+                <Flex gap={3} mt='15px'>
                     <Button size={'xs'} width='fit-content' colorScheme={'red'} onClick={() => {
                         localStorage.clear()
                         toast({

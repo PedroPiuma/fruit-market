@@ -23,19 +23,19 @@ const Card = ({ name, price, url, type, setStorageNum }) => {
     }
 
     return (
-        <Flex bgGradient={'linear(to-tr, yellow.100, green.700)'} alignItems={'center'} borderBottom='2px' borderTop='2px' borderStyle='solid' borderColor={'teal.200'} borderRadius='5px 30px' justifyContent={'space-around'}
+        <Flex bgGradient={'linear(to-tr, blackAlpha.100, green.50)'} alignItems={'center'} borderBottom='2px' borderTop='2px' borderStyle='solid' borderColor={'green'} borderRadius='8px' justifyContent={'space-around'}
             padding={'5px'} gap='5x' width={370} height={190}>
             <Flex flexDirection={'column'} alignItems='center'>
-                <Text as={'kbd'} >{name}</Text>
-                <Circle as={Image} src={url} border='1px solid black' alt='Foto da fruta' boxSize='150px' objectFit='cover' />
+                <Text>{name}</Text>
+                <Circle as={Image} src={url} border='1px solid' borderColor='blackAlpha.600' alt='Foto da fruta' boxSize='150px' objectFit='cover' />
             </Flex>
             <Flex flexDirection={'column'}>
                 <Stat display={'flex'} flexDirection='column' alignItems={'center'}>
-                    <StatLabel><Badge variant='outline' colorScheme='green'>Disponível</Badge></StatLabel>
+                    <StatLabel><Badge variant='solid' colorScheme='green'>Disponível</Badge></StatLabel>
                     <StatNumber>R${price.toFixed(2)}</StatNumber>
                     <StatHelpText>Preço por {type === 'kg' ? type : 'unidade'} </StatHelpText>
                 </Stat>
-                <Button colorScheme='teal' size='xs' onClick={onOpen}>Quero comprar</Button>
+                <Button colorScheme='green' size='xs' onClick={onOpen}>Quero comprar</Button>
             </Flex>
 
             <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose} size={'xs'} >
@@ -64,7 +64,7 @@ const Card = ({ name, price, url, type, setStorageNum }) => {
                             </NumberInput>
                             <Badge variant='solid' colorScheme='green' textAlign={'center'} borderRadius='0 0 15px 15px' >
                                 <Text>Preço final</Text>
-                                <Text fontSize={'sm'}>{priceFinal}</Text>
+                                <Text fontSize={'sm'}>R$ {priceFinal}</Text>
                             </Badge>
                         </Flex>
                     </ModalBody>

@@ -18,7 +18,7 @@ const CardPayment = ({ list, id, setChanged }) => {
     }
 
     return (
-        <Stack p={5} boxShadow='dark-lg' borderRadius={15} bgGradient='linear(to-b, green.100, blackAlpha.600)'>
+        <Stack p={5} boxShadow='dark-lg' borderRadius={15} bgGradient='linear(to-b, green.100, blackAlpha.200)'>
             <Text>Compra número: {id}</Text>
             {!removed ? <Flex gap={15}>
                 <List spacing={1}>
