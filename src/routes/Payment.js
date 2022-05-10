@@ -27,8 +27,8 @@ function Payment() {
             <Flex direction={'column'} gap={2}>
                 {localStorage.length < 1 ? <Text w={250} align='center'>Não há produtos na lista de compras.</Text> : ''}
                 {Object.entries(localStorage).map((elemStorage, index) => {
-                    totalValue += Number(JSON.parse(elemStorage[1])[0].priceFinal)
-                    return <CardPayment key={index} id={index + 1} list={elemStorage} setChanged={setChanged} />
+                    totalValue += elemStorage[0] !== 'user' ? Number(JSON.parse(elemStorage[1])[0].priceFinal) : 0
+                    return elemStorage[0] !== 'user' ? <CardPayment key={index} id={index + 1} list={elemStorage} setChanged={setChanged} /> : false
                 })}
             </Flex>
             <Flex direction={'column'} align='center'>

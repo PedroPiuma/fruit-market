@@ -10,8 +10,8 @@ const ListFruits = () => {
     const [storageNum, setStorageNum] = useState(Number(localStorage.length))
 
     return (
-        <Stack pt='5' px='10' pb={10} bgGradient="radial(gray.100, green.50, green.100)" minHeight={'100vh'}>
-            <Flex justifyContent={'space-between'} >
+        <Stack pt='5' pb={10} px={2} bgGradient="radial(gray.100, green.50, green.100)" minHeight={'100vh'}>
+            <Flex w='100%' justifyContent={'space-between'} maxWidth='620px' alignItems={'center'} mr='auto' ml='auto'>
                 <Text>Carrinho com: {storageNum} itens</Text>
                 <Button alignSelf='flex-end' colorScheme={'red'} size={'xs'} width='fit-content' onClick={() => {
                     localStorage.clear()
@@ -23,9 +23,9 @@ const ListFruits = () => {
                     })
                 }}>Limpar Carrinho</Button>
             </Flex>
-            <Stack spacing={2} display='flex' flexWrap={'wrap'} flexDirection='row' gap={2} justifyContent='center' alignItems={'center'}>
+            <Flex display='flex' flexWrap={'wrap'} flexDirection='row' gap={['15px', '20px', '25px']} justifyContent='center' alignItems={'center'}>
                 {fruitList.map((elem, index) => <Card key={index} name={elem.name} price={elem.price} url={elem.url} type={elem.type} setStorageNum={setStorageNum} />)}
-            </Stack>
+            </Flex>
             <Link to={'/payment'}><Image src={carIcon} p='5px 5px 5px 10px' h={50} w='60px' position={'fixed'} right={1} bottom={5} size='lg' bgColor={'blackAlpha.600'} borderRadius='15px 3px 3px 15px' /></Link>
         </Stack >
     )
