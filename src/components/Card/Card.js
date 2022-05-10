@@ -33,7 +33,7 @@ const Card = ({ name, price, url, type, setStorageNum }) => {
             <Flex flexDirection={'column'}>
                 <Stat display={'flex'} flexDirection='column' alignItems={'center'}>
                     <StatLabel><Badge variant='solid' colorScheme='green'>Disponível</Badge></StatLabel>
-                    <StatNumber>R${price.toFixed(2)}</StatNumber>
+                    <StatNumber>R${(price.toFixed(2)).toString().replace('.', ',')}</StatNumber>
                     <StatHelpText>Preço por {type === 'kg' ? type : 'unidade'} </StatHelpText>
                 </Stat>
                 <Button colorScheme='green' size='xs' onClick={onOpen}>Quero comprar</Button>
@@ -49,7 +49,7 @@ const Card = ({ name, price, url, type, setStorageNum }) => {
                         <Flex flexDirection={'column'}>
                             <Stat display={'flex'} flexDirection='column' alignItems={'center'}>
                                 <StatLabel><Badge variant='outline' colorScheme='green'>Disponível</Badge></StatLabel>
-                                <StatNumber>R${price.toFixed(2)}</StatNumber>
+                                <StatNumber>R${(price.toFixed(2)).toString().replace('.', ',')}</StatNumber>
                                 <StatHelpText>Preço por {type === 'kg' ? type : 'unidade'} </StatHelpText>
                             </Stat>
                             <NumberInput maxLength={2} defaultValue={type === 'kg' ? 0.5 : 1} precision={type === 'kg' ? 3 : 0} max={type === 'kg' ? 10 : 25} min={type === 'kg' ? 0.2 : 1} step={type === 'kg' ? 0.05 : 1} onChange={(e) => {
@@ -65,7 +65,7 @@ const Card = ({ name, price, url, type, setStorageNum }) => {
                             </NumberInput>
                             <Badge variant='solid' colorScheme='green' textAlign={'center'} borderRadius='0 0 15px 15px' >
                                 <Text>Preço final</Text>
-                                <Text fontSize={'sm'}>R$ {priceFinal}</Text>
+                                <Text fontSize={'sm'}>R$ {priceFinal.toString().replace('.', ',')}</Text>
                             </Badge>
                         </Flex>
                     </ModalBody>
