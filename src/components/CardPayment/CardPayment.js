@@ -23,7 +23,7 @@ const CardPayment = ({ list, id, setChanged }) => {
             {!removed ? <Flex gap={15}>
                 <List spacing={1}>
                     <ListItem>Fruta: {fruit}</ListItem>
-                    <ListItem>Preço: R${price}</ListItem>
+                    <ListItem>Preço: R${price.toString().replace('.', ',')}</ListItem>
                 </List>
                 <List spacing={1}>
                     <ListItem>Quantidade em {type}:
@@ -41,10 +41,11 @@ const CardPayment = ({ list, id, setChanged }) => {
                         setRemoved(!removed)
                     }}>Remover da lista</Button>
                 </List>
-            </Flex> : <Flex direction={'column'} align='center'>
-                <p>Compra removida</p>
-                <Button size={'xs'} colorScheme='blackAlpha' /*onClick={() => setRemoved(!removed)}*/>Desfazer</Button>
-            </Flex>}
+            </Flex> :
+                <Flex direction={'column'} align='center'>
+                    <p>Compra removida</p>
+                    <Button size={'xs'} colorScheme='blackAlpha' /*onClick={() => setRemoved(!removed)}*/>Desfazer</Button>
+                </Flex>}
         </Stack >
     )
 }

@@ -1,4 +1,8 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stat, StatLabel, StatNumber, Text, useDisclosure, useToast } from "@chakra-ui/react"
+import {
+    Alert, AlertDescription, AlertIcon, AlertTitle, Button, Flex, Modal, ModalBody,
+    ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stat, StatLabel,
+    StatNumber, Text, useDisclosure, useToast
+} from "@chakra-ui/react"
 import { useRef, useState } from "react"
 import CardPayment from "../components/CardPayment/CardPayment"
 
@@ -14,15 +18,22 @@ function Payment() {
         Object.entries(localStorage).forEach(([fruit, values]) => {
             const valuesParsed = JSON.parse(values)
             const [priceFinal, quantity, type, price] = valuesParsed
-            toPay.push({ name: fruit, qtd: quantity.quantity, type: type.type, payment: priceFinal.priceFinal, price: price.price })
+            toPay.push({
+                name: fruit,
+                qtd: quantity.quantity,
+                type: type.type,
+                payment: priceFinal.priceFinal,
+                price: price.price
+            })
         })
         toPay.unshift({ paymentTotal: totalValue })
+        localStorage.clear()
         console.log(toPay)
     }
 
     // if (localStorage.length < 1) return <p>Não há compras na lista</p>;
     return (
-        <Flex direction='column' align='center' bgGradient="radial(gray.100, green.50, green.100)" minHeight={'100vh'}>
+        <Flex direction='column' align='center' bgGradient="radial(gray.100, green.50, green.100)" minHeight={'100vh'} pb={['150px']}>
             <Text mb={3} mt={3} fontSize={'xl'}>Seu carrinho de compras</Text>
             <Flex direction={'column'} gap={2}>
                 {localStorage.length < 1 ? <Text w={250} align='center'>Não há produtos na lista de compras.</Text> : ''}
@@ -33,8 +44,8 @@ function Payment() {
             </Flex>
             <Flex direction={'column'} align='center'>
                 <Stat mt={5}>
-                    <StatLabel>Valor Total</StatLabel>
-                    <StatNumber>R$ {localStorage.length < 1 ? '---' : `${totalValue.toFixed(2)}`}</StatNumber>
+                    <StatLabel fontSize={['2xl']}>Valor Total</StatLabel>
+                    <StatNumber fontSize={['4xl']}>R$ {localStorage.length < 1 ? '---' : `${totalValue.toFixed(2).toString().replace('.', ',')}`}</StatNumber>
                 </Stat>
                 <Flex gap={3} mt='15px'>
                     <Button size={'xs'} width='fit-content' colorScheme={'red'} onClick={() => {
@@ -72,7 +83,7 @@ function Payment() {
                                 Verifique abaixo a lista
                                 {Object.entries(localStorage).map(elemStorage => {
                                     // console.log(JSON.parse(elemStorage[1])[2].type)
-                                    return <p>{elemStorage[0]}: {JSON.parse(elemStorage[1])[1].quantity.toFixed(3)}{JSON.parse(elemStorage[1])[2].type} por R${JSON.parse(elemStorage[1])[0].priceFinal}</p>
+                                    return elemStorage[0] !== 'user' ? <p>{elemStorage[0]}: {JSON.parse(elemStorage[1])[1].quantity.toFixed(3).toString().replace('.', ',')}{JSON.parse(elemStorage[1])[2].type} por R${JSON.parse(elemStorage[1])[0].priceFinal.toString().replace('.', ',')}</p> : false
                                 })}
                             </AlertDescription>
                         </Alert> :
