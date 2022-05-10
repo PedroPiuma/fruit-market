@@ -23,11 +23,12 @@ const Card = ({ name, price, url, type, setStorageNum }) => {
     }
 
     return (
-        <Flex bgGradient={'linear(to-tr, blackAlpha.100, green.50)'} alignItems={'center'} borderBottom='2px' borderTop='2px' borderStyle='solid' borderColor={'green'} borderRadius='8px' justifyContent={'space-around'}
-            padding={'5px'} gap='5x' width={370} height={190}>
+        <Flex bgGradient={'linear(to-tr, blackAlpha.100, green.50)'} alignItems={'center'}
+            borderBottom='2px' borderTop='2px' borderStyle='solid' borderColor={'green'} borderRadius='8px' justifyContent={'space-around'}
+            padding={'5px'} gap='5x' width='304px' height={190}>
             <Flex flexDirection={'column'} alignItems='center'>
                 <Text>{name}</Text>
-                <Circle as={Image} src={url} border='1px solid' borderColor='blackAlpha.600' alt='Foto da fruta' boxSize='150px' objectFit='cover' />
+                <Circle as={Image} src={url} border='1px solid' borderColor='blackAlpha.600' alt='Foto da fruta' boxSize='150px' objectFit='cover' minWidth='150px' />
             </Flex>
             <Flex flexDirection={'column'}>
                 <Stat display={'flex'} flexDirection='column' alignItems={'center'}>

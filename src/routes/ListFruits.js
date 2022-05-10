@@ -4,14 +4,21 @@ import { Button, Stack, useToast, Flex, Text, Image } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import { useState } from "react"
 import carIcon from '../img/car-icon.png'
+import styled from "styled-components"
+
+const ImgIcon = styled.div`
+@media (min-width: 768px) {
+    display: none;
+}
+`
 
 const ListFruits = () => {
     const toast = useToast()
     const [storageNum, setStorageNum] = useState(Number(localStorage.length))
 
     return (
-        <Stack pt='5' px='10' pb={10} bgGradient="radial(gray.100, green.50, green.100)" minHeight={'100vh'}>
-            <Flex justifyContent={'space-between'} >
+        <Stack pt='5' pb={10} px={[2, 40]} bgGradient="radial(gray.100, green.50, green.100)" minHeight={'100vh'}>
+            <Flex w='100%' justifyContent={'space-between'} minW='300px' width={['304px']} alignItems={'center'} mr='auto' ml='auto' mb={['15px', '25px']}>
                 <Text>Carrinho com: {storageNum} itens</Text>
                 <Button alignSelf='flex-end' colorScheme={'red'} size={'xs'} width='fit-content' onClick={() => {
                     localStorage.clear()
@@ -23,10 +30,10 @@ const ListFruits = () => {
                     })
                 }}>Limpar Carrinho</Button>
             </Flex>
-            <Stack spacing={2} display='flex' flexWrap={'wrap'} flexDirection='row' gap={2} justifyContent='center' alignItems={'center'}>
+            <Flex display='flex' flexWrap={'wrap'} flexDirection='row' gap={['15px', '20px', '25px']} justifyContent='center' alignItems={'center'}>
                 {fruitList.map((elem, index) => <Card key={index} name={elem.name} price={elem.price} url={elem.url} type={elem.type} setStorageNum={setStorageNum} />)}
-            </Stack>
-            <Link to={'/payment'}><Image src={carIcon} p='5px 5px 5px 10px' h={50} w='60px' position={'fixed'} right={1} bottom={5} size='lg' bgColor={'blackAlpha.600'} borderRadius='15px 3px 3px 15px' /></Link>
+            </Flex>
+            <Link to={'/payment'}><ImgIcon as={Image} src={carIcon} p='5px 5px 5px 10px' h={50} w='60px' position={'fixed'} right={1} bottom={5} size='lg' bgColor={'blackAlpha.600'} borderRadius='15px 3px 3px 15px' /></Link>
         </Stack >
     )
 }
